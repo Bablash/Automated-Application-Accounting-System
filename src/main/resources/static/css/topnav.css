@@ -1,0 +1,31 @@
+.topnav {
+    background-color: rgba(246, 246, 246, 1);
+    box-shadow: 0 4px 6px rgba(37, 50, 79, 0.32), 0 1px 3px rgba(53, 46, 80, 0.18);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.topnav a {
+    float: right;
+    text-align: center;
+    vertical-align: center;
+    color: black;
+    padding: 18px 16px;
+    text-decoration: none;
+    font-size: 24px;
+}
+a#main{
+    padding: 12px;
+}
+
+.topnav a:hover {
+    background-color: rgba(217, 217, 217, 1);
+    color: black;
+}
+
+.topnav a.active {
+    background-color: rgba(16, 62, 96, 1);
+    color: white;
+}
