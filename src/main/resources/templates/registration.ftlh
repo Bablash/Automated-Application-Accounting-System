@@ -39,15 +39,15 @@
     <form name="registrationForm" id="form">
         <div>
             <label for="login">Логин:</label>
-            <input name="login" />
+            <input required name="login" />
         </div>
         <div>
             <label for="password">Пароль:</label>
-            <input type="password" name="password" />
+            <input required type="password" name="password" />
         </div>
         <div>
             <label for="fcs">ФИО:</label>
-            <input name="fcs" />
+            <input required name="fcs" />
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <div>

@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/records/user/**","/users/user/**","/users/user/employees", "/procedures/user/**",
+                .antMatchers("/records/user/**","/users/user/**", "/procedures/user/**",
                         "/procedures_employees/procedure/**","/schedules/user/**").hasRole("USER")
                 .antMatchers("/records/employee/**","/schedules/employee/**", "/users/employee/**").hasRole("EMPLOYEE")
                 .antMatchers("/css/**","/image/**","/js/registration.js","/registration","/users/registration","/")

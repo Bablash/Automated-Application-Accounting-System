@@ -77,9 +77,8 @@ async function deleteProcedure(id,csrf) {
         method: "DELETE",
         headers: { "Accept": "application/json",'X-CSRF-TOKEN': csrf  }
     });
-    if (response.ok === true) {
-        const procedure = await response.json();
-        document.querySelector("tr[data-rowId='" + procedure.id + "']").remove();
+    if (response.status === 204) {
+        document.querySelector("tr[data-rowId='" + id + "']").remove();
     }
 }
 

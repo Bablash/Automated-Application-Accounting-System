@@ -15,7 +15,7 @@ public class ProcedureService {
         this.procedureR = procedureR;
     }
     public Procedure findProcedure(Integer id){
-        return procedureR.findById(id).orElse(null);
+        return procedureR.findById(id).orElseThrow(() -> new ThereIsNoDataException());
     }
     public Procedure saveProcedure(Procedure procedure) {
         procedureR.save(procedure);
@@ -30,7 +30,7 @@ public class ProcedureService {
         procedureR.save(procedure);
         return procedure;
     }
-    public List<Procedure> findAllProcedure() {
+    public List<Procedure> findAllProcedures() {
         return procedureR.findAll(SORT_BY_CREATED_AT_DESC);
     }
 

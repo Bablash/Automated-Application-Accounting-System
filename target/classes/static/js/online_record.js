@@ -5,9 +5,7 @@ async function getData() {
         headers: {"Accept": "application/json"}
     });
 
-
     if (response2.ok === true) {
-
         const procedures = await response2.json();
         const select = document.getElementById("procedure");
         procedures.forEach(procedure => {
@@ -20,96 +18,43 @@ async function getData() {
 }
 
 async function getEmployeeByProcedure(id) {
-
-    const response1 = await fetch("/procedures_employees/procedure/" + id, {
+    const response = await fetch("/users/user/employees/" + id, {
         method: "GET",
         headers: {"Accept": "application/json"}
     });
 
-    const response2 = await fetch("/users/user/employees", {
-        method: "GET",
-        headers: {"Accept": "application/json"}
-    });
-
-
-    if (response1.ok === true && response2.ok === true) {
-
-        const procedures_employees = await response1.json();
-        const employees = await response2.json();
+    if (response.ok) {
+        const employees = await response.json();
         const select1 = document.getElementById("employee");
         let options = select1.options;
         while(options.length > 0){
             options[options.length - 1] = null;
         }
-        procedures_employees.forEach(procedure_employee => {
-            employees.forEach(employee => {
-                if(procedure_employee.employeeId === employee.id) {
-                    const opt = document.createElement("option");
-                    opt.value = employee.id;
-                    opt.text = employee.fcs;
-                    select1.add(opt);
-                }
-            });
+        employees.forEach(employee => {
+            const opt = document.createElement("option");
+            opt.value = employee.id;
+            opt.text = employee.fcs;
+            select1.add(opt);
         });
+        getDateByEmployeeId(options[0].value, id);
     }
 }
 
-function timeFree(schedules, schedules2, procedure){
-    let date;
-    schedules.forEach(schedule => {
-        if(date === schedule.date) return false;
-        date = schedule.date;
-        let time = new Array();
-        schedules2.forEach(schedule2 => {
-            if(schedule2.date === date){
-                time.push(schedule2.time);
-            }
-        })
-
-        time.sort();
-        for(let j = 0; j < time.length; j++) {
-            for (let i = 1; i < procedure.duration.slice(0,2); i++) {
-                if (time.slice(0,2)[j] + i != time.slice(0,2)[i] || time.slice(0,2)[j] + i > 18) {
-                    time.splice(j);
-                }
-            }
-        }
-        const select1 = document.getElementById("date");
-        time.forEach(time1 => {
-            const opt = document.createElement("option");
-            opt.value = date + " " + time1;
-            opt.text = date + " " + time1;
-            select1.add(opt);
-        })
-
-    });
-
-}
-
-async function getDateByEmployeeId(id) {
-
-    const form = document.forms["online_recordForm"];
-    const procedure_id = form.elements["procedure"].value;
-
-    const response2 = await fetch("/procedures/user/" + procedure_id, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-
-    const response1 = await fetch("/schedules/user/byEmployee/" + id + "/" + true, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-    const response3 = await fetch("/schedules/user/byEmployee/" + id + "/" + true, {
+async function getDateByEmployeeId(id, procedure_id) {
+    const response1 = await fetch("/schedules/user/byEmployee/" + id + "/" + true + "/" + procedure_id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
 
     if (response1.ok) {
         const schedules = await response1.json();
-        const schedules2 = await response3.json();
-        const procedure = await response2.json();
-        timeFree(schedules, schedules2, procedure)
+        const select1 = document.getElementById("date");
+        schedules.forEach(schedule => {
+            const opt = document.createElement("option");
+            opt.value = schedule.date + " " + schedule.time;
+            opt.text = schedule.date + " " + schedule.time;
+            select1.add(opt);
+        })
     }
 }
 
@@ -156,8 +101,15 @@ document.getElementById("procedure").addEventListener("change", e => {
 document.getElementById("employee").addEventListener("change", e => {
 
     e.preventDefault();
+    const select1 = document.getElementById("date");
+    let options = select1.options;
+    while(options.length > 0){
+        options[options.length - 1] = null;
+    }
+
     const id = document.getElementById("employee").value;
-    getDateByEmployeeId(id);
+    const procedure_id = document.getElementById("procedure").value;
+    getDateByEmployeeId(id, procedure_id);
 })
 
 document.forms["online_recordForm"].addEventListener("submit", e => {

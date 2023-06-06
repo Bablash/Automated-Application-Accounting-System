@@ -2,9 +2,6 @@ package App.Custom;
 
 import lombok.Data;
 
-import java.sql.Date;
-import java.sql.Time;
-
 @Data
 public class CustomEmployee {
     private Integer id;

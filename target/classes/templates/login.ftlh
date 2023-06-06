@@ -39,9 +39,9 @@
     align-items: center;">
     <form action="/login" method="POST" id="form" name="loginForm">
         Логин:
-        <input name="username" style="margin-bottom: 10px"/>
+        <input required name="username" style="margin-bottom: 10px"/>
         Пароль:
-        <input type="password" name="password" />
+        <input required type="password" name="password" />
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <button type="submit">Войти</button>
         <a href="/registration" style="margin-top: 10px">Зарегистрироваться</a>

@@ -4,6 +4,7 @@ import App.Model.Schedule;
 import App.Service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -34,14 +35,14 @@ public class ScheduleController {
         return scheduleService.getScheduleByEmployeeId(id);
     }
 
-    @GetMapping("/user/byEmployee/{id}/{status}")
-    public List<Schedule> getScheduleByEmployeeIdForUser(@PathVariable Integer id, @PathVariable Boolean status) {
-        return scheduleService.getScheduleByEmployeeIdAndStatus(id, status);
+    @GetMapping("/user/byEmployee/{id}/{status}/{procedure_id}")
+    public List<Schedule> getScheduleByEmployeeIdForUser(@PathVariable Integer id, @PathVariable Boolean status, @PathVariable Integer procedure_id) throws ParseException {
+        return scheduleService.getScheduleByEmployeeIdAndStatus(id, status, procedure_id);
     }
 
     @GetMapping("/admin/byEmployee/{id}/{status}")
-    public List<Schedule> getScheduleByEmployeeIdForAdmin(@PathVariable Integer id, @PathVariable Boolean status) {
-        return scheduleService.getScheduleByEmployeeIdAndStatus(id, status);
+    public List<Schedule> getScheduleByEmployeeIdForAdmin(@PathVariable Integer id, Boolean status, Integer procedure_id) throws ParseException {
+        return scheduleService.getScheduleByEmployeeIdAndStatus(id, status, procedure_id);
     }
 
     @PostMapping

@@ -148,7 +148,21 @@ function recordToOl(record){
         editLink.addEventListener("click", e => {
 
             e.preventDefault();
-            getProcedure(procedure.id);
+            var newWin = window.open('/online_record');
+            newWin.onload = function() {
+                const select1 = newWin.document.getElementById("procedure");
+                const opt = document.createElement("option");
+                opt.text = record.procedure_name;
+                select1.add(opt);
+                select1.options[opt.index].selected = true;
+
+                const select2 = newWin.document.getElementById("employee");
+                const opt2 = document.createElement("option");
+                opt2.text = record.employee_fcs;
+                select2.add(opt2);
+                select2.options[opt.index].selected = true;
+            }
+
         });
         ol.append(editLink);
     }

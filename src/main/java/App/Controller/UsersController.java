@@ -1,15 +1,11 @@
 package App.Controller;
 
 import App.Custom.CustomEmployee;
-import App.Custom.CustomRecord;
-import App.Model.Procedure;
-import App.Model.Record;
 import App.Model.Users;
 import App.Model.enums.Role;
 import App.Service.UsersService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,15 +37,9 @@ public class UsersController {
         return usersService.findUser(id);
     }
 
-    @GetMapping("/user/employees")
-    public List<CustomEmployee>  getEmployees() {
-        List<CustomEmployee> tmp = new ArrayList<>();
-        List<Users> employees = usersService.getUsersByRole(Role.ROLE_EMPLOYEE);
-
-        for(int i = 0; i < employees.size(); i++){
-             tmp.add(new CustomEmployee(employees.get(i).getId(), employees.get(i).getFcs()));
-        }
-        return tmp;
+    @GetMapping("/user/employees/{procedure_id}")
+    public List<CustomEmployee>  getEmployeesByProcedureId(@PathVariable Integer procedure_id) {
+        return usersService.getEmployees(procedure_id);
     }
 
     @GetMapping("/employees")

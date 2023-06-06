@@ -2,8 +2,6 @@ package App.Repository;
 
 import App.Custom.RecordStatistic;
 import App.Model.Record;
-import App.Model.Users;
-import App.Model.enums.Role;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +28,6 @@ public interface RecordRepository extends JpaRepository<Record, Integer> {
             "GROUP BY " +
             "    v.procedureId")
     List<RecordStatistic> findProcedureCount();
+
+    List<Record> findByStatusAndDateAndTimeLessThan(String status, Date date, Date time);
 }

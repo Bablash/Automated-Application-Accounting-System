@@ -224,7 +224,7 @@ async function getDateByEmployeeId(id) {
     const form = document.forms["recordForm"];
     const procedure_id = form.elements["procedure"].value;
 
-    const response2 = await fetch("/procedures/admin/" + procedure_id, {
+    const response2 = await fetch("/procedures/" + procedure_id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });

@@ -9,7 +9,15 @@ async function createUser(login, password, fcs, csrf) {
             fcs: fcs
         })
     });
-    reset();
+    if (response.ok === true){
+        reset();
+        alert("Вы зарегистрированы!");
+    }
+    else {
+        reset();
+        alert("Пользователь с таким логином уже существует в системе!");
+    }
+
 }
 
 function reset() {
@@ -26,5 +34,4 @@ document.forms["registrationForm"].addEventListener("submit", e => {
     const csrf = form.elements["_csrf"].value;
     e.preventDefault();
     createUser(login,password,fcs, csrf);
-    window.location.href = '/login'
 })
